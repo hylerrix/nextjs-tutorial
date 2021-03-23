@@ -21,7 +21,7 @@ export default {
                 '**/npm-debug.log',
                 'dist'
             ],
-            github: 'https://github.com/hylerrix/react-fullstack-handbook',
+            github: 'https://github.com/hylerrix/blitzjs-tutorial',
             head: React.createElement("link", { href: "/favicon.png", rel: "icon", type: "image/png" }),
             include: undefined,
             nav: [
@@ -41,6 +41,11 @@ export default {
                     link: 'https://github.com/hylerrix/deno-tutorial',
                     target: '_blank',
                     text: 'Deno 钻研之术'
+                },
+                {
+                    link: 'https://github.com/hylerrix/deno-algorithm',
+                    target: '_blank',
+                    text: 'Deno 算法之旅'
                 },
                 {
                     link: 'https://blitzjs.com/',

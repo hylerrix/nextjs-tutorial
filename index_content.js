@@ -84,7 +84,7 @@ const IndexPage = () => (React.createElement(React.Fragment, null,
                 marginTop: '2rem'
             } },
             React.createElement("a", { className: "btn btn-primary", href: "/articles/" }, "\u5F00\u59CB\u9605\u8BFB"),
-            React.createElement("a", { className: "btn", target: "_blank", href: "https://github.com/hylerrix/fullstack-react-handbook" }, "\u6E90\u7801\u4ED3\u5E93"))),
+            React.createElement("a", { className: "btn", target: "_blank", href: "https://github.com/hylerrix/blitzjs-tutorial" }, "\u6E90\u7801\u4ED3\u5E93"))),
     React.createElement("div", { className: "cards" },
         React.createElement("div", null,
             React.createElement("h2", null, "\u539F\u521B\u6587\u7AE0"),
@@ -123,10 +123,10 @@ const IndexPage = () => (React.createElement(React.Fragment, null,
         } },
         React.createElement("code", { dangerouslySetInnerHTML: {
                 __html: `# 直接在 issues 区里推荐
-https://github.com/hylerrix/fullstack-react-handbook/issues
+https://github.com/hylerrix/blitzjs-tutorial/issues
 
 # 或克隆项目，本地编辑并 PR
-git clone https://github.com/\${YOUR_NAME}/fullstack-react-handbook
+git clone https://github.com/\${YOUR_NAME}/blitzjs-tutorial
 git add . && git commit -s -m "feat(docs): add a new article"
 git push origin main`
             } }))));

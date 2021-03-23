@@ -6,7 +6,7 @@ export default {
     plugins: ['sidebar', 'prev_next'],
     title: 'Blitz.js + React 全栈开发手册',
     description: 'Blitz + React 全栈开发手册，构建下一代 React 全栈应用',
-    github: 'https://github.com/hylerrix/react-fullstack-handbook',
+    github: 'https://github.com/hylerrix/blitzjs-tutorial',
     head: (React.createElement("link", { rel: "icon", type: "image/png", href: "/favicon.png" })),
     nav: [
         { text: '文章', link: '/articles/' },
@@ -19,6 +19,7 @@ export default {
                 React.createElement("img", { src: "http://qiniu.ningo.cloud/hylerrix/reward-wechat.png", width: "256", style: { verticalAlign: 'top' } })))
         },
         { text: 'Deno 钻研之术', target: '_blank', link: 'https://github.com/hylerrix/deno-tutorial' },
+        { text: 'Deno 算法之旅', target: '_blank', link: 'https://github.com/hylerrix/deno-algorithm' },
         { text: 'Blitz.js', target: '_blank', link: 'https://blitzjs.com/' },
         { text: '持续添加中...', target: '_blank', link: 'https://github.com/hylerrix' },
         {
