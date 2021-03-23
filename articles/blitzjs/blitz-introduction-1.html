@@ -1,0 +1,804 @@
+<!doctype html><html class="" data-reactroot=""><head><link rel="icon" type="image/png" href="/favicon.png"/>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="description" content="Blitz + React 全栈开发手册，构建下一代 React 全栈应用"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/>
+<title data-react-helmet="true">Blitz.js 入门教程：基于 Next.js 的下一代 React 全栈框架 · Blitz.js + React 全栈开发手册</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Blitz.js + React 全栈开发手册</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Blitz.js + React 全栈开发手册</a></h1></li><li class="hide_on_mobile"><a href="/articles/">文章</a></li><li class="hide_on_mobile"><a href="http://qiniu.ningo.cloud/hylerrix/reward-alipay.png" target="_blank">打赏一下!!</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix/deno-tutorial" target="_blank">Deno 钻研之术</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix/deno-algorithm" target="_blank">Deno 算法之旅</a></li><li class="hide_on_mobile"><a href="https://blitzjs.com/" target="_blank">Blitz.js</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix" target="_blank">持续添加中...</a></li><li class="hide_on_mobile"><a href="https://github.com/ningowood" target="_blank">凝果屋</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix" target="_blank">关于</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="https://github.com/hylerrix/blitzjs-tutorial" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class="unfold"><a href="/articles/blitz/README.md" class="nav_link">articles/blitz/README.md<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"></ol></li><li class="unfold"><a href="/articles/blitz/README.md" class="nav_link">articles/blitz/README.md<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/articles/explore/create-react-app-intro.html" class="nav_link">深入浅出 Create React App</a></li><li class=""><a href="/articles/explore/javascript-toolchain-rome.html" class="nav_link">欲取代绝大多 JavaScript 工具链？Rome 尝鲜</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>Blitz.js 入门教程：基于 Next.js 的下一代 React 全栈框架</h1>
+<h2 id="%E8%AF%91%E8%80%85%E5%BA%8F">译者序<a class="anchor" href="#%E8%AF%91%E8%80%85%E5%BA%8F">§</a></h2>
+<p>苦 JS 生态久已。在 2020 年后，一直徘徊于该为自己构建怎样的技术栈，迟迟没有太多落地成果——库太多了，一个小场景就能有很多个解决方案；方向也太多了，哪怕大前端三个字，现今都能拆分为很多的细分领域。直到遇到了 Rome，看到社区已经开始尝试整合重构 Node 生态的前端工具链；又遇到了 Deno，直接摆脱 Node 的历史遗留问题来建设更贴近现代标准的 JavaScript/TypeScript 运行时；现在又遇到了 Blitz.js，一站式 React 全栈框架，在 Next.js 之上赋能更多的后端场景...于是自己的很多方向性问题都豁然开朗：通过建立不同的 Repo 来专攻不同的方向，且每个 Repo 都能有代表性的同时，覆盖更多的场景。于是——</p>
+<ul>
+<li><a href="https://github.com/hylerrix/deno-tutorial">Deno 钻研之术</a>：看未来，学标准。Node 也不落下。</li>
+<li><a href="https://github.com/hylerrix/deno-algorithm">Deno 算法之旅</a>：刷算法，玩测试。</li>
+<li><a href="https://github.com/hylerrix/es-interview">ECMAScript 面试宝典</a>：备面试，打基础；</li>
+<li><a href="https://github.com/hylerrix/blitzjs-tutorial">Blitz.js + React 全栈开发手册</a>：搞工程，尝全栈。深入 React，实战 Next.js，掌握后端开发。</li>
+<li>以及还有一切弃坑的 repo......</li>
+</ul>
+<p>当然，Blitz.js 还有很多吸引人的特性：</p>
+<ul>
+<li><strong>一体式全栈架构</strong>：在一个 Monorepo 里从数据库到用户端全搞定，也没用重复性代码。试想前后端分离的架构下，如果你喜欢 TypeScript 的话，很可能得写两套相同 TS...且这种一体式架构很容易让自己的项目灵感从头到尾地快速落地。</li>
+<li><strong>API 不再必须</strong>：REST 和 GraphQL？或许都不需要，交给 Blitz.js 来在编译时构建。当需要提供 API 给更多端使用时，再结合相关库来生成 API。</li>
+<li><strong>更轻松的开箱体验</strong>：脚手架初始化后直接提供登录注册甚至重置密码功能，直接支持最基本的后端环境，开箱即用的体验不能再好，同时甚至能通过强大的 blitz generate CLI 快速植入生态圈中的主流库到项目中。</li>
+<li><strong>并不会“学不动了”</strong>：基于 Next.js，前端 React，后端 Prisma 等库，Blitz.js 构建于各种已经主流化的生态之上。</li>
+<li><strong>拥抱未来</strong>：Blitz.js 预计将于下个月（2021 年 4 月）发布 v1.0 版本。</li>
+</ul>
+<p>本文属于《<a href="https://github.com/hylerrix/blitzjs-tutorial">Blitz.js + React 全栈开发手册</a>》系列，原文翻译内容会同步更新到 <a href="https://github.com/blitz-js/zh-hans.blitzjs.com">Blitz.js 中文仓库</a> 上。欢迎 Star 和 Watch：<a href="https://github.com/hylerrix/blitzjs-tutorial">https://github.com/hylerrix/blitzjs-tutorial</a>。</p>
+<h2 id="%E5%BF%AB%E9%80%9F%E5%85%A5%E6%89%8B">快速入手<a class="anchor" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E6%89%8B">§</a></h2>
+<h3 id="%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84%E7%8E%AF%E5%A2%83">配置你的环境<a class="anchor" href="#%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84%E7%8E%AF%E5%A2%83">§</a></h3>
+<p>你需要使用 Node 12 或者更新的版本。</p>
+<h3 id="%E5%AE%89%E8%A3%85-blitz">安装 Blitz<a class="anchor" href="#%E5%AE%89%E8%A3%85-blitz">§</a></h3>
+<p>执行 <code>npm install -g blitz</code></p>
+<h3 id="%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E9%A1%B9%E7%9B%AE">创建一个新项目<a class="anchor" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E9%A1%B9%E7%9B%AE">§</a></h3>
+<ol>
+<li><code>blitz new myAppName</code></li>
+<li><code>cd myAppName</code></li>
+<li><code>blitz dev</code></li>
+<li>访问你的新项目 <a href="http://localhost:3000">http://localhost:3000</a></li>
+</ol>
+<h3 id="%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-blitz-%E7%A4%BE%E5%8C%BA-%F0%9F%91%8B">欢迎来到 Blitz 社区 👋<a class="anchor" href="#%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-blitz-%E7%A4%BE%E5%8C%BA-%F0%9F%91%8B">§</a></h3>
+<p>Blitz 社区是个温暖、安全、多样化、包容也不失有趣的社区！ LGBTQ+、女生和少数派欢迎你们的到来。</p>
+<p><a href="https://discord.blitzjs.com">加入我们的 Discord 社区</a>，我们会在这里帮助每个人搭建 Blitz 应用。这里也是我们协作共建 Blitz 本身的重要场地。</p>
+<p>对于提问以及会花费较长时间的讨论，<a href="https://github.com/blitz-js/blitz/discussions">可以发帖到我们的论坛中</a>。</p>
+<p>有关完整的介绍，请阅读 社区是如何运作的。文中包括了如何获得帮助、如何报告错误以及如何提出新功能建议等的详细指导。</p>
+<p><strong>欢迎你的帮助来使 Blitz 变得更好！ 🤝</strong></p>
+<p>我们有一个很棒的社区正在共同努力让 Blitz 成为世界上一流的框架。</p>
+<p>你该如何提供帮助：</p>
+<ol>
+<li>通过 <a href="https://github.com/blitz-js/blitz/issues/new/choose">在 GitHub 上提交 issue</a> 来反馈 Bug。</li>
+<li>贡献代码： 阅读贡献指南，以了解如何开始。</li>
+<li><a href="https://github.com/blitz-js/blitz#sponsors-and-donations">赞助 &amp; 捐赠</a>，可以从 $5/月 开始。</li>
+<li>以及你觉得可以的其它任何方式！我们非常感谢你的任何贡献（如文档、视频、博客等）。如果你遇到任何阻碍，欢迎来 Discord 上与我们交流！:)</li>
+</ol>
+<h3 id="%E4%B8%8B%E4%B8%80%E6%AD%A5">下一步<a class="anchor" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5">§</a></h3>
+<h4 id="%E6%95%99%E7%A8%8B">教程<a class="anchor" href="#%E6%95%99%E7%A8%8B">§</a></h4>
+<p>教程篇 是有关 Blitz 所有基本内容的完整练习，其中包括将模型添加到数据库以及从前端读取和更新数据。</p>
+<h4 id="%E5%AD%A6%E4%B9%A0">学习<a class="anchor" href="#%E5%AD%A6%E4%B9%A0">§</a></h4>
+<p>这里有你想要熟悉的 Blitz 的关键概念：</p>
+<ul>
+<li>如何 新建页面</li>
+<li>如何 使用文件路由系统</li>
+<li>如何设置并 使用数据库</li>
+<li>如何使用 Blitz Queries 和 Mutations 来读写你的数据库。</li>
+<li>如何通过 <code>blitz generate</code> 命令来用脚手架生成数据库模型
+的所有代码。</li>
+</ul>
+<h2 id="%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">入门教程<a class="anchor" href="#%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">§</a></h2>
+<p>在本教程中，我们将会指导你创建一个简易的投票系统。</p>
+<p>我们将假设你已经 安装了 Blitz。你可以通过在终端运行以下命令来确定 Blitz 是否已经安装或检查安装的版本号：</p>
+<pre class="language-bash"><code class="language-bash">blitz -v
+</code></pre>
+<p>如果 Blitz 已经安装成功，你应该能看到安装的版本号。否则你会收到一条像这样的错误提示：“command not found: blitz”。</p>
+<h3 id="%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E5%BA%94%E7%94%A8">创建一个新应用<a class="anchor" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E5%BA%94%E7%94%A8">§</a></h3>
+<p>在命令行中，<code>cd</code> 进入你想要创建应用的根目录文件夹后，执行以下命令：</p>
+<pre class="language-autoit"><code class="language-autoit">blitz new my<span class="token operator">-</span>blitz<span class="token operator">-</span>app
+</code></pre>
+<p>Blitz 会在你当前的文件夹中创建一个 <code>my-blitz-app</code> 文件夹。你接着会收到一个选择表单库的提示。本教程中将选择其中推荐的 <code>React Final Form</code> 库。</p>
+<p>让我们看看 <code>blitz new</code> 命令创建了什么：</p>
+<pre class="language-markdown"><code class="language-markdown">my-blitz-app
+├── app/
+│   ├── api/
+│   ├── auth/
+│   │   ├── components/
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── SignupForm.tsx
+│   │   ├── mutations/
+│   │   │   ├── changePassword.ts
+│   │   │   ├── forgotPassword.test.ts
+│   │   │   ├── forgotPassword.ts
+│   │   │   ├── login.ts
+│   │   │   ├── logout.ts
+│   │   │   ├── resetPassword.test.ts
+│   │   │   ├── resetPassword.ts
+│   │   │   └── signup.ts
+│   │   ├── pages/
+│   │   │   ├── forgot-password.tsx
+│   │   │   ├── login.tsx
+│   │   │   ├── reset-password.tsx
+│   │   │   └── signup.tsx
+│   │   └── validations.ts
+│   ├── core/
+│   │   ├── components/
+│   │   │   ├── Form.tsx
+│   │   │   └── LabeledTextField.tsx
+│   │   ├── hooks/
+│   │   │   └── useCurrentUser.ts
+│   │   └── layouts/
+│   │       └── Layout.tsx
+│   ├── pages/
+│   │   ├── 404.tsx
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   ├── index.test.tsx
+│   │   └── index.tsx
+│   └── users/
+│       └── queries/
+│           └── getCurrentUser.ts
+├── db/
+│   ├── index.ts
+│   ├── schema.prisma
+│   └── seeds.ts
+├── integrations/
+├── mailers/
+│   └── forgotPasswordMailer.ts
+├── public/
+│   ├── favicon.ico*
+│   └── logo.png
+├── test/
+│   ├── setup.ts
+│   └── utils.tsx
+├── README.md
+├── babel.config.js
+├── blitz.config.js
+├── jest.config.js
+├── package.json
+├── tsconfig.json
+├── types.d.ts
+├── types.ts
+└── yarn.lock
+</code></pre>
+<p>上述文件有：</p>
+<ul>
+<li><code>app/</code> 文件夹是项目中绝大多数功能的容器。你可以在这里放置任何页面或 API 路由。</li>
+<li><code>app/pages/</code> 文件夹是主要的页面文件夹。如果你使用过 Next.js 你将会立即注意到两者的不同。在 Blitz 中，你可以有许多 <code>pages</code> 文件夹，它们将在构建时合并在一起。</li>
+<li><code>app/core/</code> 文件夹是放置整个应用中使用到的通用组件、Hooks 等的主要位置。</li>
+<li><code>db/</code> 是数据库配置所在的位置。如果你正在编写模型或检查迁移情况，可以来这里。</li>
+<li><code>public/</code> 文件夹可以让你放置任何静态资源。如果你有要在应用中使用的图像、文件或视频等，都可以放置在其中。</li>
+<li><code>.babelrc.js</code>、<code>.env</code> 等（“dotfiles 文件”）是各种 JavaScript 工具需要用到的配置文件。</li>
+<li><code>blitz.config.js</code> 用于 Blitz 的高级自定义配置，与 <code>next.config.js</code> 相同</li>
+<li><code>tsconfig.json</code> 是我们推荐的 TypeScript 设置。</li>
+</ul>
+<h3 id="%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%9C%8D%E5%8A%A1%E5%99%A8">开发环境服务器<a class="anchor" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%9C%8D%E5%8A%A1%E5%99%A8">§</a></h3>
+<p>现在，如果你还没有在 <code>my-blitz-app</code> 文件夹下，确保切换到其中，并运行以下命令：</p>
+<pre class="language-autoit"><code class="language-autoit">blitz dev
+</code></pre>
+<p>你将会在命令行中看到如下输出：</p>
+<pre class="language-autoit"><code class="language-autoit">✔ Compiled
+Loaded env from <span class="token operator">/</span>private<span class="token operator">/</span>tmp<span class="token operator">/</span>my<span class="token operator">-</span>blitz<span class="token operator">-</span>app<span class="token operator">/</span><span class="token punctuation">.</span>env
+warn  <span class="token operator">-</span> You have enabled experimental <span class="token function">feature</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">.</span>
+warn  <span class="token operator">-</span> Experimental features are <span class="token operator">not</span> covered by semver<span class="token punctuation">,</span> <span class="token operator">and</span> may cause unexpected <span class="token operator">or</span> broken application behavior<span class="token punctuation">.</span> Use them at your own risk<span class="token punctuation">.</span>
+
+ready <span class="token operator">-</span> started server on <span class="token number">0.0</span><span class="token punctuation">.</span><span class="token number">0.0</span><span class="token punctuation">:</span><span class="token number">3000</span><span class="token punctuation">,</span> url<span class="token punctuation">:</span> http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">3000</span>
+info  <span class="token operator">-</span> Using external babel configuration from <span class="token operator">/</span>my<span class="token operator">-</span>blitz<span class="token operator">-</span>app<span class="token operator">/</span>babel<span class="token punctuation">.</span>config<span class="token punctuation">.</span>js
+event <span class="token operator">-</span> compiled successfully
+</code></pre>
+<p>现在服务器已成功运行，浏览器中访问 <a href="http://localhost:3000">localhost:3000</a>。你将会看到带有 Blitz logo 的欢迎页面。成功了！</p>
+<h3 id="%E4%BB%A5%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E6%B3%A8%E5%86%8C">以用户身份注册<a class="anchor" href="#%E4%BB%A5%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E6%B3%A8%E5%86%8C">§</a></h3>
+<p>Bliz 应用让用户登录和注册开箱即用！现在让我们来尝试一下。点击 <strong>注册</strong> 按钮，输入任何电子邮件和密码，然后单击 <strong>创建账户</strong> 后，你将被重定向到用户主页，并在其中可以看到你的用户 <code>id</code> 和 <code>role</code>。</p>
+<p>如果需要，你也可以尝试注销并重新登录。或在登录页面上单击 <strong>忘记密码</strong>，以尝试重置密码流程。</p>
+<h3 id="%E7%BC%96%E5%86%99%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2">编写你的第一个页面<a class="anchor" href="#%E7%BC%96%E5%86%99%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2">§</a></h3>
+<p>接下来让我们创建你的第一个页面。</p>
+<p>打开 <code>app/pages/index.tsx</code> 文件然后替换掉 <code>Home</code> 组件的所有内容为这段代码：</p>
+<pre class="language-jsx"><code class="language-jsx"><span class="token comment">//...</span>
+
+<span class="token keyword">const</span> <span class="token maybe-class-name">Home</span><span class="token operator">:</span> <span class="token function-variable function"><span class="token maybe-class-name">BlitzPage</span></span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword control-flow">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span><span class="token plain-text">Hello, world!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><span class="token plain-text">
+
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Suspense</span></span> <span class="token attr-name">fallback</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Loading...<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">UserInfo</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Suspense</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//...</span>
+</code></pre>
+<p>保存文件后你将会看到浏览器页面进行了更新。你可以如你所愿地添加需要的各种自
+定义项，。准备就绪后，请转到下一节。</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE">数据库配置<a class="anchor" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE">§</a></h3>
+<p>好消息是，已经为你建立好了 SQLite 数据库！你可以在终端中运行 <code>blitz prisma studio</code> 来打开一个可以查看数据库数据的 Web 界面。</p>
+<p>请注意，在开始第一个实际项目时，你可能希望使用可扩展性更高的数据库（如 PostgreSQL），以避免在将来切换数据库时产生的麻烦。有关更多信息，请参见 数据库概述 篇。目前，我们将继续使用默认的 SQLite 数据库。</p>
+<h3 id="%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E4%BB%A3%E7%A0%81">模型的脚手架代码<a class="anchor" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E4%BB%A3%E7%A0%81">§</a></h3>
+<p>Blitz 提供了一个方便的 CLI 命令 <code>generate</code> 来构建样板代码。我们将使用 <code>generate</code> 来创建两个模型：<code>Question</code>（问题） 和 <code>Choice</code>（选择）。<code>Question</code> 包含问题内容和选择列表。<code>Choice</code> 包含选择内容、投票计数以及相关的问题。Blitz 将为这两个模型自动生成一个 id、一个创建时间戳以及一个最新更新的时间戳。</p>
+<h4 id="%E9%A6%96%E5%85%88%E6%88%91%E4%BB%AC%E5%B0%86%E7%94%9F%E6%88%90%E4%B8%8E-question-%E6%A8%A1%E5%9E%8B%E6%9C%89%E5%85%B3%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF">首先，我们将生成与 <code>Question</code> 模型有关的所有信息：<a class="anchor" href="#%E9%A6%96%E5%85%88%E6%88%91%E4%BB%AC%E5%B0%86%E7%94%9F%E6%88%90%E4%B8%8E-question-%E6%A8%A1%E5%9E%8B%E6%9C%89%E5%85%B3%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF">§</a></h4>
+<pre class="language-bash"><code class="language-bash">blitz generate all question text:string
+</code></pre>
+<p>当出现提示框时，按 <strong>Enter</strong> 以运行 <code>prisma migrate</code>，这将使用新的模型来更新你的数据库架构。此时会要求一个名称，可以输入“add question”之类的值。</p>
+<pre class="language-bash"><code class="language-bash">CREATE    app/pages/questions/<span class="token punctuation">[</span>questionId<span class="token punctuation">]</span>.tsx
+CREATE    app/pages/questions/<span class="token punctuation">[</span>questionId<span class="token punctuation">]</span>/edit.tsx
+CREATE    app/pages/questions/index.tsx
+CREATE    app/pages/questions/new.tsx
+CREATE    app/questions/components/QuestionForm.tsx
+CREATE    app/questions/queries/getQuestion.ts
+CREATE    app/questions/queries/getQuestions.ts
+CREATE    app/questions/mutations/createQuestion.ts
+CREATE    app/questions/mutations/deleteQuestion.ts
+CREATE    app/questions/mutations/updateQuestion.ts
+
+✔ Model <span class="token keyword">for</span> <span class="token string">'question'</span> created <span class="token keyword">in</span> schema.prisma:
+
+<span class="token operator">></span> model Question <span class="token punctuation">{</span>
+<span class="token operator">></span>   <span class="token function">id</span>        Int      @default<span class="token punctuation">(</span>autoincrement<span class="token punctuation">(</span><span class="token punctuation">))</span> @id
+<span class="token operator">></span>   createdAt DateTime @default<span class="token punctuation">(</span>now<span class="token punctuation">(</span><span class="token punctuation">))</span>
+<span class="token operator">></span>   updatedAt DateTime @updatedAt
+<span class="token operator">></span>   text      String
+<span class="token operator">></span> <span class="token punctuation">}</span>
+
+? Run <span class="token string">'prisma migrate dev'</span> to update your database? <span class="token punctuation">(</span>Y/n<span class="token punctuation">)</span> › <span class="token boolean">true</span>
+</code></pre>
+<pre class="language-bash"><code class="language-bash">Environment variables loaded from .env
+Prisma schema loaded from db/schema.prisma
+Datasource <span class="token string">"db"</span><span class="token builtin class-name">:</span> SQLite database <span class="token string">"db.sqlite"</span> at <span class="token string">"file:./db.sqlite"</span>
+
+✔ Name of migration … <span class="token function">add</span> question
+The following migration<span class="token punctuation">(</span>s<span class="token punctuation">)</span> have been created and applied from new schema changes:
+
+migrations/
+  └─ 20210217035805_add_question/
+    └─ migration.sql
+
+✔ Generated Prisma Client <span class="token punctuation">(</span><span class="token number">2.17</span>.0<span class="token punctuation">)</span> to ./<a class="token email-link" href="mailto:node_modules/@prisma">node_modules/@prisma</a>/client <span class="token keyword">in</span> 103ms
+
+Everything is now <span class="token keyword">in</span> sync.
+</code></pre>
+<p><code>generate</code> 命令搭配 <code>all</code> 类型将生成相关的模型、queries、mutation 和页面文件。请参见 Blitz generate 页面查询更多可用的类型选项。</p>
+<h4 id="%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E5%B0%86%E7%94%9F%E6%88%90%E5%B8%A6%E6%9C%89%E7%9B%B8%E5%BA%94-queries-%E5%92%8C-mutations-%E7%9A%84-choice-%E6%A8%A1%E5%9E%8B">接下来，我们将生成带有相应 queries 和 mutations 的 <code>Choice</code> 模型。<a class="anchor" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E5%B0%86%E7%94%9F%E6%88%90%E5%B8%A6%E6%9C%89%E7%9B%B8%E5%BA%94-queries-%E5%92%8C-mutations-%E7%9A%84-choice-%E6%A8%A1%E5%9E%8B">§</a></h4>
+<p>这次我们搭配 <code>resource</code> 类型，因为我们不需要为 <code>Choice</code> 模型生成页面：</p>
+<pre class="language-bash"><code class="language-bash">blitz generate resource choice text votes:int:default<span class="token operator">=</span><span class="token number">0</span> belongsTo:question
+</code></pre>
+<p>同样，在系统提示你进行迁移时，按 <strong>Enter</strong> 后输入迁移的名称。</p>
+<pre class="language-bash"><code class="language-bash">CREATE    app/choices/queries/getChoice.ts
+CREATE    app/choices/queries/getChoices.ts
+CREATE    app/choices/mutations/createChoice.ts
+CREATE    app/choices/mutations/deleteChoice.ts
+CREATE    app/choices/mutations/updateChoice.ts
+
+✔ Model <span class="token keyword">for</span> <span class="token string">'choice'</span> created <span class="token keyword">in</span> schema.prisma:
+
+<span class="token operator">></span> model Choice <span class="token punctuation">{</span>
+<span class="token operator">></span>   <span class="token function">id</span>         Int      @default<span class="token punctuation">(</span>autoincrement<span class="token punctuation">(</span><span class="token punctuation">))</span> @id
+<span class="token operator">></span>   createdAt  DateTime @default<span class="token punctuation">(</span>now<span class="token punctuation">(</span><span class="token punctuation">))</span>
+<span class="token operator">></span>   updatedAt  DateTime @updatedAt
+<span class="token operator">></span>   text       String
+<span class="token operator">></span>   votes      Int      @default<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token operator">></span>   question   Question @relation<span class="token punctuation">(</span>fields: <span class="token punctuation">[</span>questionId<span class="token punctuation">]</span>, references: <span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token operator">></span>   questionId Int
+<span class="token operator">></span> <span class="token punctuation">}</span>
+
+? Run <span class="token string">'prisma migrate dev'</span> to update your database? <span class="token punctuation">(</span>Y/n<span class="token punctuation">)</span> › <span class="token boolean">true</span>
+</code></pre>
+<h4 id="%E6%9C%80%E5%90%8E%E8%AE%A9%E6%88%91%E4%BB%AC%E6%9B%B4%E6%96%B0-question-%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%85%B3%E8%81%94%E5%88%B0-choice-%E4%B8%8A">最后，让我们更新 <code>Question</code> 模型以关联到 <code>Choice</code> 上。<a class="anchor" href="#%E6%9C%80%E5%90%8E%E8%AE%A9%E6%88%91%E4%BB%AC%E6%9B%B4%E6%96%B0-question-%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%85%B3%E8%81%94%E5%88%B0-choice-%E4%B8%8A">§</a></h4>
+<p>打开 <code>db/schema.prisma</code> 并在 <code>Question</code> 模型中添加 <code>choices Choice[]</code>。</p>
+<pre class="language-diff"><code class="language-diff">model Question {
+<span class="token unchanged"><span class="token prefix unchanged"> </span> id        Int      @id @default(autoincrement())
+<span class="token prefix unchanged"> </span> createdAt DateTime @default(now())
+<span class="token prefix unchanged"> </span> updatedAt DateTime @updatedAt
+<span class="token prefix unchanged"> </span> text      String
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span> choices   Choice[]
+</span>}
+</code></pre>
+<p>然后运行 <code>blitz prisma generate</code> 来更新 prisma 客户端以同步 schema 的更改。这里不涉及数据库迁移，因为数据库中没有实际字段添加到 <code>Question</code> 模型中。</p>
+<h3 id="%E8%AE%BF%E9%97%AE-prisma-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%A2%E6%88%B7%E7%AB%AF">访问 Prisma 数据库客户端<a class="anchor" href="#%E8%AE%BF%E9%97%AE-prisma-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%A2%E6%88%B7%E7%AB%AF">§</a></h3>
+<p>现在，让我们跳进 Blitz 交互式 Shell 中，并使用 Blitz 为你提供的 Primsa 数据库客户端。要启动 Blitz 控制台，请使用以下命令：</p>
+<pre class="language-bash"><code class="language-bash">blitz console
+</code></pre>
+<p>一旦你进入控制台后，浏览数据库客户端：</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># No questions are in the system yet.</span>
+⚡ <span class="token operator">></span> await db.question.findMany<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token comment"># Create a new Question:</span>
+⚡ <span class="token operator">></span> <span class="token builtin class-name">let</span> q <span class="token operator">=</span> await db.question.create<span class="token punctuation">(</span><span class="token punctuation">{</span>data: <span class="token punctuation">{</span>text: <span class="token string">"What's new?"</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+undefined
+
+<span class="token comment"># See the entire object:</span>
+⚡ <span class="token operator">></span> q
+<span class="token punctuation">{</span>
+  id: <span class="token number">1</span>,
+  createdAt: <span class="token number">2020</span>-06-15T15:06:14.959Z,
+  updatedAt: <span class="token number">2020</span>-06-15T15:06:14.959Z,
+  text: <span class="token string">"What's new?"</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment"># Or, access individual values on the object:</span>
+⚡ <span class="token operator">></span> q.text
+<span class="token string">"What's new?"</span>
+
+<span class="token comment"># Change values by using the update function:</span>
+⚡ <span class="token operator">></span> q <span class="token operator">=</span> await db.question.update<span class="token punctuation">(</span><span class="token punctuation">{</span>where: <span class="token punctuation">{</span>id: <span class="token number">1</span><span class="token punctuation">}</span>, data: <span class="token punctuation">{</span>text: <span class="token string">"What's up?"</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  id: <span class="token number">1</span>,
+  createdAt: <span class="token number">2020</span>-06-15T15:06:14.959Z,
+  updatedAt: <span class="token number">2020</span>-06-15T15:13:17.394Z,
+  text: <span class="token string">"What's up?"</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment"># db.question.findMany() now displays all the questions in the database:</span>
+⚡ <span class="token operator">></span> await db.question.findMany<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    id: <span class="token number">1</span>,
+    createdAt: <span class="token number">2020</span>-06-15T15:06:14.959Z,
+    updatedAt: <span class="token number">2020</span>-06-15T15:13:17.394Z,
+    text: <span class="token string">"What's up?"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
+<h3 id="%E6%9B%B4%E6%96%B0%E6%A8%A1%E5%9E%8B%E5%B1%9E%E6%80%A7%E7%94%9F%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81">更新模型属性生成的代码<a class="anchor" href="#%E6%9B%B4%E6%96%B0%E6%A8%A1%E5%9E%8B%E5%B1%9E%E6%80%A7%E7%94%9F%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81">§</a></h3>
+<blockquote>
+<p>在再次运行该应用之前，我们需要自定义一些已生成的代码。最终这些修复过程将不再需要——但就目前而言，我们需要解决结果未解决的问题。</p>
+</blockquote>
+<p>自动生成的页面，当前并未使用你在生成过程中定义的实际模型的属性。以后会支持，但现在，需要我们手动修复生成的页面。</p>
+<h4 id="question-%E9%A1%B5%E9%9D%A2">Question 页面<a class="anchor" href="#question-%E9%A1%B5%E9%9D%A2">§</a></h4>
+<p>进入 <code>app/pages/questions/index.tsx</code>. 请注意到一个 <code>QuestionsList</code> 组件已经为你生成了：</p>
+<pre class="language-jsx"><code class="language-jsx"><span class="token comment">// app/pages/questions/index.tsx</span>
+
+<span class="token keyword module">export</span> <span class="token keyword">const</span> <span class="token function-variable function"><span class="token maybe-class-name">QuestionsList</span></span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token function">useRouter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> page <span class="token operator">=</span> <span class="token known-class-name class-name">Number</span><span class="token punctuation">(</span>router<span class="token punctuation">.</span><span class="token property-access">query</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>questions<span class="token punctuation">,</span> hasMore<span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">usePaginatedQuery</span><span class="token punctuation">(</span>getQuestions<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    orderBy<span class="token operator">:</span> <span class="token punctuation">{</span>id<span class="token operator">:</span> <span class="token string">"asc"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    skip<span class="token operator">:</span> <span class="token constant">ITEMS_PER_PAGE</span> <span class="token operator">*</span> page<span class="token punctuation">,</span>
+    take<span class="token operator">:</span> <span class="token constant">ITEMS_PER_PAGE</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> <span class="token function-variable function">goToPreviousPage</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> router<span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>query<span class="token operator">:</span> <span class="token punctuation">{</span>page<span class="token operator">:</span> page <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">goToNextPage</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> router<span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>query<span class="token operator">:</span> <span class="token punctuation">{</span>page<span class="token operator">:</span> page <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword control-flow">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token punctuation">{</span>questions<span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">question</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">(</span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>question<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Link</span></span> <span class="token attr-name">href</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/questions/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>question<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+              </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span><span class="token punctuation">></span></span><span class="token punctuation">{</span>question<span class="token punctuation">.</span><span class="token property-access">name</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Link</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+          </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+        <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span><span class="token plain-text">
+
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">disabled</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>page <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">}</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>goToPreviousPage<span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        Previous
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">disabled</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token operator">!</span>hasMore<span class="token punctuation">}</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>goToNextPage<span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        Next
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>不过目前跑不通的！请记住我们创建的 <code>Question</code> 模型上面没有任何“name”字段。
+要解决此问题，请替换 <code>question.name</code> 为 <code>question.text</code>。</p>
+<pre class="language-diff"><code class="language-diff">// app/pages/questions/index.tsx
+
+export const QuestionsList = () => {
+<span class="token unchanged"><span class="token prefix unchanged"> </span> const router = useRouter()
+<span class="token prefix unchanged"> </span> const page = Number(router.query.page) || 0
+<span class="token prefix unchanged"> </span> const [{questions, hasMore}] = usePaginatedQuery(getQuestions, {
+<span class="token prefix unchanged"> </span>   orderBy: {id: "asc"},
+<span class="token prefix unchanged"> </span>   skip: ITEMS_PER_PAGE * page,
+<span class="token prefix unchanged"> </span>   take: ITEMS_PER_PAGE,
+<span class="token prefix unchanged"> </span> })
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span> const goToPreviousPage = () => router.push({query: {page: page - 1}})
+<span class="token prefix unchanged"> </span> const goToNextPage = () => router.push({query: {page: page + 1}})
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span> return (
+<span class="token prefix unchanged"> </span>   &lt;div>
+<span class="token prefix unchanged"> </span>     &lt;ul>
+<span class="token prefix unchanged"> </span>       {questions.map((question) => (
+<span class="token prefix unchanged"> </span>         &lt;li key={question.id}>
+<span class="token prefix unchanged"> </span>           &lt;Link href={`/questions/${question.id}`}>
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>              &lt;a>{question.name}&lt;/a>
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>              &lt;a>{question.text}&lt;/a>
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>           &lt;/Link>
+<span class="token prefix unchanged"> </span>         &lt;/li>
+<span class="token prefix unchanged"> </span>       ))}
+<span class="token prefix unchanged"> </span>     &lt;/ul>
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>     &lt;button disabled={page === 0} onClick={goToPreviousPage}>
+<span class="token prefix unchanged"> </span>       Previous
+<span class="token prefix unchanged"> </span>     &lt;/button>
+<span class="token prefix unchanged"> </span>     &lt;button disabled={!hasMore} onClick={goToNextPage}>
+<span class="token prefix unchanged"> </span>       Next
+<span class="token prefix unchanged"> </span>     &lt;/button>
+<span class="token prefix unchanged"> </span>   &lt;/div>
+<span class="token prefix unchanged"> </span> )
+</span>}
+</code></pre>
+<p>接下来，我们将类似的修复方法应用于 <code>app/questions/components/QuestionForm.tsx</code> 中。在表单提交中，将 <code>LabeledTextField</code> 中 <code>name</code> 变为 <code>text</code>。</p>
+<pre class="language-diff"><code class="language-diff">export function QuestionForm&lt;S extends z.ZodType&lt;any, any>>(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> props: FormProps&lt;S>,
+</span>) {
+<span class="token unchanged"><span class="token prefix unchanged"> </span> return (
+<span class="token prefix unchanged"> </span>   &lt;Form&lt;S> {...props}>
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>     &lt;LabeledTextField name="name" label="Name" placeholder="Name" />
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>     &lt;LabeledTextField name="text" label="Text" placeholder="Text" />
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>   &lt;/Form>
+<span class="token prefix unchanged"> </span> )
+</span>}
+</code></pre>
+<h4 id="createquestion-mutation"><code>createQuestion</code> mutation<a class="anchor" href="#createquestion-mutation">§</a></h4>
+<p>在 <code>app/questions/mutations/createQuestion.ts</code> 中，我们需要更新 <code>CreateQuestion</code> zod 验证模式，使用 <code>text</code> 而不是 <code>name</code>。</p>
+<pre class="language-diff"><code class="language-diff">// app/questions/mutations/createQuestion.ts
+
+const CreateQuestion = z
+<span class="token unchanged"><span class="token prefix unchanged"> </span> .object({
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   name: z.string(),
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   text: z.string(),
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span> })
+<span class="token prefix unchanged"> </span> .nonstrict()
+</span>// ...
+</code></pre>
+<h4 id="updatequestion-mutation"><code>updateQuestion</code> mutation<a class="anchor" href="#updatequestion-mutation">§</a></h4>
+<p>在 <code>app/questions/mutations/updateQuestion.ts</code> 中，我们需要更新 <code>UpdateQuestion</code> zod 验证模式，使用 <code>text</code> 而不是 <code>name</code>。</p>
+<pre class="language-diff"><code class="language-diff">// app/questions/mutations/updateQuestion.ts
+
+const UpdateQuestion = z
+<span class="token unchanged"><span class="token prefix unchanged"> </span> .object({
+<span class="token prefix unchanged"> </span>   id: z.number(),
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   name: z.string(),
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   text: z.string(),
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span> })
+<span class="token prefix unchanged"> </span> .nonstrict()
+</span>// ...
+</code></pre>
+<h4 id="deletequestion-mutation"><code>deleteQuestion</code> mutation<a class="anchor" href="#deletequestion-mutation">§</a></h4>
+<p>Prisma 尚不支持“级联删除”。在本教程的上下文中，这意味着它在删除 <code>Question</code> 时不会删除相关的 <code>Choice</code>数据。我们需要临时改动生成的 <code>deleteQuestion</code> mutation，以便手动做这件事。在文本编辑框中打开 <code>app/questions/mutations/deleteQuestion.ts</code> 并将以下内容添加到函数主体的顶
+部。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">await</span> db<span class="token punctuation">.</span>choice<span class="token punctuation">.</span><span class="token function">deleteMany</span><span class="token punctuation">(</span><span class="token punctuation">{</span>where<span class="token operator">:</span> <span class="token punctuation">{</span>questionId<span class="token operator">:</span> id<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>最终的效果应该为：</p>
+<pre class="language-diff"><code class="language-diff">// app/questions/mutations/deleteQuestion.ts
+
+export default resolver.pipe(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> resolver.zod(DeleteQuestion),
+<span class="token prefix unchanged"> </span> resolver.authorize(),
+<span class="token prefix unchanged"> </span> async ({id}) => {
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   await db.choice.deleteMany({where: {questionId: id}})
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>   const question = await db.question.deleteMany({where: {id}})
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   return question
+<span class="token prefix unchanged"> </span> },
+</span>)
+</code></pre>
+<p>现在，此 mutation 将在删除问题本身之前，删除与问题相关的选择。</p>
+<h4 id="%E7%8E%B0%E5%9C%A8%E5%B0%9D%E8%AF%95%E5%88%9B%E5%BB%BA%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E9%97%AE%E9%A2%98">现在尝试创建、更新和删除问题<a class="anchor" href="#%E7%8E%B0%E5%9C%A8%E5%B0%9D%E8%AF%95%E5%88%9B%E5%BB%BA%E6%9B%B4%E6%96%B0%E5%92%8C%E5%88%A0%E9%99%A4%E9%97%AE%E9%A2%98">§</a></h4>
+<p>太棒了！现在确保你的程序正常运行。否则在你的终端中执行 <code>blitz dev</code>，然后访问 <code>localhost:3000/questions</code>。尝试创建问题并编辑、删除它们。</p>
+<h3 id="%E5%9C%A8%E9%97%AE%E9%A2%98%E8%A1%A8%E6%A0%BC%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%80%89%E6%8B%A9%E9%A1%B9">在问题表格中添加选择项<a class="anchor" href="#%E5%9C%A8%E9%97%AE%E9%A2%98%E8%A1%A8%E6%A0%BC%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%80%89%E6%8B%A9%E9%A1%B9">§</a></h3>
+<p>到目前为止，你做的很棒！我们要做的下一件事是在我们的问题中添加选择。在你的编辑器中打开 <code>app/questions/components/QuestionForm.tsx</code>。</p>
+<p>添加另外三个 <code>&lt;LabeledTextField&gt;</code> 组件作为选择。</p>
+<pre class="language-diff"><code class="language-diff">export function QuestionForm&lt;S extends z.ZodType&lt;any, any>>(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> props: FormProps&lt;S>,
+</span>) {
+<span class="token unchanged"><span class="token prefix unchanged"> </span> return (
+<span class="token prefix unchanged"> </span>   &lt;Form&lt;S> {...props}>
+<span class="token prefix unchanged"> </span>     &lt;LabeledTextField name="text" label="Text" placeholder="Text" />
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>     &lt;LabeledTextField name="choices.0.text" label="Choice 1" />
+<span class="token prefix inserted">+</span>     &lt;LabeledTextField name="choices.1.text" label="Choice 2" />
+<span class="token prefix inserted">+</span>     &lt;LabeledTextField name="choices.2.text" label="Choice 3" />
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>   &lt;/Form>
+<span class="token prefix unchanged"> </span> )
+</span>}
+</code></pre>
+<p>现在打开 <code>app/pages/questions/new.tsx</code> 并设置 <code>initialValues</code> 为如下：</p>
+<pre class="language-diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span>     &lt;QuestionForm
+<span class="token prefix unchanged"> </span>       submitText="Create Question"
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>       // initialValues={{ }}
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>       initialValues={{choices: []}}
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>       onSubmit={async (values) => {
+<span class="token prefix unchanged"> </span>         try {
+<span class="token prefix unchanged"> </span>           const question = await createQuestionMutation(values)
+<span class="token prefix unchanged"> </span>           router.push(`/questions/${question.id}`)
+<span class="token prefix unchanged"> </span>         } catch (error) {
+<span class="token prefix unchanged"> </span>           console.error(error)
+<span class="token prefix unchanged"> </span>           return {
+<span class="token prefix unchanged"> </span>             [FORM_ERROR]: error.toString(),
+<span class="token prefix unchanged"> </span>           }
+<span class="token prefix unchanged"> </span>         }
+<span class="token prefix unchanged"> </span>       }}
+<span class="token prefix unchanged"> </span>     />
+</span></code></pre>
+<p>接下来打开 <code>app/questions/mutations/createQuestion.ts</code> 并更新 zod 模式，来让 mutation 接收 choice 数据。而且我们还需要更新 <code>db.question.create</code> 调用，以便 choice 也可以被创建。</p>
+<pre class="language-diff"><code class="language-diff">// app/questions/mutations/createQuestion.ts
+
+const CreateQuestion = z
+<span class="token unchanged"><span class="token prefix unchanged"> </span> .object({
+<span class="token prefix unchanged"> </span>   text: z.string(),
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   choices: z.array(z.object({text: z.string()})),
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span> })
+<span class="token prefix unchanged"> </span> .nonstrict()
+</span>
+export default resolver.pipe(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> resolver.zod(CreateQuestion),
+<span class="token prefix unchanged"> </span> resolver.authorize(),
+<span class="token prefix unchanged"> </span> async (input) => {
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   const question = await db.question.create({data: input})
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   const question = await db.question.create({
+<span class="token prefix inserted">+</span>     data: {
+<span class="token prefix inserted">+</span>       ...input,
+<span class="token prefix inserted">+</span>       choices: {create: input.choices},
+<span class="token prefix inserted">+</span>     },
+<span class="token prefix inserted">+</span>   })
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   return question
+<span class="token prefix unchanged"> </span> },
+</span>)
+</code></pre>
+<h4 id="%E8%AF%95%E8%AF%95%E7%9C%8B">试试看<a class="anchor" href="#%E8%AF%95%E8%AF%95%E7%9C%8B">§</a></h4>
+<p>现在你可以转到 <code>localhost:3000/questions/new</code> 并创建一个带有选择的新问题！</p>
+<h3 id="%E5%88%97%E5%87%BA%E9%80%89%E6%8B%A9">列出选择<a class="anchor" href="#%E5%88%97%E5%87%BA%E9%80%89%E6%8B%A9">§</a></h3>
+<p>该轻松一下了。返回浏览器中的 <code>localhost:3000/questions</code> 并查看你创建的所有问题。让我们在这些问题下列出相关的选择如何？首先，我们需要自定义问题查询函数。在 Prisma 中，你需要手动让客户端知道你需要查询的嵌套关系，将你的 <code>getQuestion.ts</code> 和 <code>getQuestions.ts</code> 文件更改为如下所示：</p>
+<pre class="language-diff"><code class="language-diff">// app/questions/queries/getQuestion.ts
+
+const GetQuestion = z.object({
+<span class="token unchanged"><span class="token prefix unchanged"> </span> // This accepts type of undefined, but is required at runtime
+<span class="token prefix unchanged"> </span> id: z.number().optional().refine(Boolean, "Required"),
+</span>})
+
+export default resolver.pipe(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> resolver.zod(GetQuestion),
+<span class="token prefix unchanged"> </span> resolver.authorize(),
+<span class="token prefix unchanged"> </span> async ({id}) => {
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   const question = await db.question.findFirst({where: {id}})
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   const question = await db.question.findFirst({
+<span class="token prefix inserted">+</span>     where: {id},
+<span class="token prefix inserted">+</span>     include: {choices: true},
+<span class="token prefix inserted">+</span>   })
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   if (!question) throw new NotFoundError()
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   return question
+<span class="token prefix unchanged"> </span> },
+</span>)
+</code></pre>
+<pre class="language-diff"><code class="language-diff">// app/questions/queries/getQuestions.ts
+
+interface GetQuestionsInput
+<span class="token unchanged"><span class="token prefix unchanged"> </span> extends Pick&lt;
+<span class="token prefix unchanged"> </span>   Prisma.QuestionFindManyArgs,
+<span class="token prefix unchanged"> </span>   "where" | "orderBy" | "skip" | "take"
+<span class="token prefix unchanged"> </span> > {}
+</span>
+export default resolver.pipe(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> resolver.authorize(),
+<span class="token prefix unchanged"> </span> async ({where, orderBy, skip = 0, take = 100}: GetQuestionsInput) => {
+<span class="token prefix unchanged"> </span>   const {items: questions, hasMore, nextPage, count} = await paginate({
+<span class="token prefix unchanged"> </span>     skip,
+<span class="token prefix unchanged"> </span>     take,
+<span class="token prefix unchanged"> </span>     count: () => db.question.count({where}),
+<span class="token prefix unchanged"> </span>     query: (paginateArgs) =>
+<span class="token prefix unchanged"> </span>       db.question.findMany({
+<span class="token prefix unchanged"> </span>         ...paginateArgs,
+<span class="token prefix unchanged"> </span>         where,
+<span class="token prefix unchanged"> </span>         orderBy,
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>         include: {choices: true},
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>       }),
+<span class="token prefix unchanged"> </span>   })
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   return {
+<span class="token prefix unchanged"> </span>     questions,
+<span class="token prefix unchanged"> </span>     nextPage,
+<span class="token prefix unchanged"> </span>     hasMore,
+<span class="token prefix unchanged"> </span>     count,
+<span class="token prefix unchanged"> </span>   }
+<span class="token prefix unchanged"> </span> },
+</span>)
+</code></pre>
+<p>现在在浏览器中跳回我们主要的 Question 页面 (<code>app/pages/questions/index.tsx</code>)，我们可以列出每个问题的选择。并将此代码添加到我们 <code>QuestionsList</code> 中的 <code>Link</code> 下：</p>
+<pre class="language-diff"><code class="language-diff">// app/pages/questions/index.tsx
+
+// ...
+{
+<span class="token unchanged"><span class="token prefix unchanged"> </span> questions.map((question) => (
+<span class="token prefix unchanged"> </span>   &lt;li key={question.id}>
+<span class="token prefix unchanged"> </span>     &lt;Link href={`/questions/${question.id}`}>
+<span class="token prefix unchanged"> </span>       &lt;a>{question.text}&lt;/a>
+<span class="token prefix unchanged"> </span>     &lt;/Link>
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>     &lt;ul>
+<span class="token prefix inserted">+</span>       {question.choices.map((choice) => (
+<span class="token prefix inserted">+</span>         &lt;li key={choice.id}>
+<span class="token prefix inserted">+</span>           {choice.text} - {choice.votes} votes
+<span class="token prefix inserted">+</span>         &lt;/li>
+<span class="token prefix inserted">+</span>       ))}
+<span class="token prefix inserted">+</span>     &lt;/ul>
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span>   &lt;/li>
+<span class="token prefix unchanged"> </span> ))
+</span>}
+// ...
+</code></pre>
+<p>现在在浏览器中访问 <code>/questions</code> 路由。<strong>神奇吧！</strong></p>
+<h3 id="%E8%AE%A9%E6%88%91%E4%BB%AC%E5%85%81%E8%AE%B8%E7%94%A8%E6%88%B7%E5%AF%B9%E8%BF%99%E4%BA%9B%E9%97%AE%E9%A2%98%E6%8A%95%E7%A5%A8">让我们允许用户对这些问题投票！<a class="anchor" href="#%E8%AE%A9%E6%88%91%E4%BB%AC%E5%85%81%E8%AE%B8%E7%94%A8%E6%88%B7%E5%AF%B9%E8%BF%99%E4%BA%9B%E9%97%AE%E9%A2%98%E6%8A%95%E7%A5%A8">§</a></h3>
+<p>在浏览器中打开 <code>app/pages/questions/[questionId].tsx</code>。首先，我们将对该页面进行一些改造。</p>
+<ol>
+<li>替换 <code>&lt;h1&gt;Question {question.id}&lt;/h1&gt;</code> 为 <code>&lt;h1&gt;{question.text}&lt;/h1&gt;</code>.</li>
+<li>删除 <code>pre</code> 元素，并将如下复制到之前写的选择列表中：</li>
+</ol>
+<pre class="language-jsx"><code class="language-jsx"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token punctuation">{</span>question<span class="token punctuation">.</span><span class="token property-access">choices</span><span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">choice</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">text</span><span class="token punctuation">}</span><span class="token plain-text"> - </span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">votes</span><span class="token punctuation">}</span><span class="token plain-text"> votes
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>如果返回浏览器，页面目前看起来像这样！</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/86548/1616475118256-6e625fe9-db7f-44ec-9a07-68a3eced32c7.png#align=left&amp;display=inline&amp;height=285&amp;margin=%5Bobject%20Object%5D&amp;originHeight=570&amp;originWidth=1134&amp;size=0&amp;status=done&amp;style=none&amp;width=567" alt=""></p>
+<h3 id="%E7%8E%B0%E5%9C%A8%E6%98%AF%E6%97%B6%E5%80%99%E6%9D%A5%E5%A2%9E%E5%8A%A0%E6%8A%95%E7%A5%A8%E5%8A%9F%E8%83%BD">现在是时候来增加投票功能！<a class="anchor" href="#%E7%8E%B0%E5%9C%A8%E6%98%AF%E6%97%B6%E5%80%99%E6%9D%A5%E5%A2%9E%E5%8A%A0%E6%8A%95%E7%A5%A8%E5%8A%9F%E8%83%BD">§</a></h3>
+<p>首先我们需要打开 <code>app/choices/mutations/updateChoice.ts</code>，更新 zod 模式，添加新增投票功能。</p>
+<pre class="language-diff"><code class="language-diff">const UpdateChoice = z
+<span class="token unchanged"><span class="token prefix unchanged"> </span> .object({
+<span class="token prefix unchanged"> </span>   id: z.number(),
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   name: z.string(),
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span> })
+<span class="token prefix unchanged"> </span> .nonstrict()
+</span>
+export default resolver.pipe(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> resolver.zod(UpdateChoice),
+<span class="token prefix unchanged"> </span> resolver.authorize(),
+<span class="token prefix unchanged"> </span> async ({id, ...data}) => {
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   const choice = await db.choice.update({where: {id}, data})
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   const choice = await db.choice.update({
+<span class="token prefix inserted">+</span>     where: {id},
+<span class="token prefix inserted">+</span>     data: {votes: {increment: 1}},
+<span class="token prefix inserted">+</span>   })
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   return choice
+<span class="token prefix unchanged"> </span> },
+</span>)
+</code></pre>
+<p>返回到 <code>app/pages/questions/[questionId].tsx</code> 中进行如下更改：</p>
+<p>在我们的 <code>li</code> 中，新增一个如下的 <code>button</code>：</p>
+<pre class="language-jsx"><code class="language-jsx"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">text</span><span class="token punctuation">}</span><span class="token plain-text"> - </span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">votes</span><span class="token punctuation">}</span><span class="token plain-text"> votes
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">Vote</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>接下来，导入我们更新的 <code>updateChoice</code> mutation，并在页面中创建 <code>handleVote</code> 函数。</p>
+<pre class="language-diff"><code class="language-diff">// app/pages/questions/[questionId].tsx
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>import updateChoice from "app/choices/mutations/updateChoice"
+</span>
+//...
+
+export const Question = () => {
+<span class="token unchanged"><span class="token prefix unchanged"> </span> const router = useRouter()
+<span class="token prefix unchanged"> </span> const questionId = useParam("questionId", "number")
+<span class="token prefix unchanged"> </span> const [deleteQuestionMutation] = useMutation(deleteQuestion)
+<span class="token prefix unchanged"> </span> const [question] = useQuery(getQuestion, {id: questionId})
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span> const [updateChoiceMutation] = useMutation(updateChoice)
+<span class="token prefix inserted">+</span>
+<span class="token prefix inserted">+</span> const handleVote = async (id: number) => {
+<span class="token prefix inserted">+</span>   try {
+<span class="token prefix inserted">+</span>     await updateChoiceMutation({id})
+<span class="token prefix inserted">+</span>     refetch()
+<span class="token prefix inserted">+</span>   } catch (error) {
+<span class="token prefix inserted">+</span>     alert("Error updating choice " + JSON.stringify(error, null, 2))
+<span class="token prefix inserted">+</span>   }
+<span class="token prefix inserted">+</span> }
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span> return (
+</span></code></pre>
+<p>然后我们需要更新问题相关的 <code>useQuery</code> 调用以返回需要在 <code>handleVote</code> 内部使用的 <code>refetch</code> 函数。</p>
+<pre class="language-diff"><code class="language-diff">// app/pages/questions/[questionId].tsx
+
+//...
+<span class="token deleted-sign deleted"><span class="token prefix deleted">-</span> const [question] = useQuery(getQuestion, {id: questionId})
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span> const [question, {refetch}] = useQuery(getQuestion, {id: questionId})
+</span>//...
+</code></pre>
+<p>最后，我们将告诉新的 <code>button</code> 来条用该函数！</p>
+<pre class="language-jsx"><code class="language-jsx"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token function">handleVote</span><span class="token punctuation">(</span>choice<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">Vote</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>最终的 <code>Question</code> 组件应该是这个样子：</p>
+<pre class="language-jsx"><code class="language-jsx"><span class="token keyword module">export</span> <span class="token keyword">const</span> <span class="token function-variable function"><span class="token maybe-class-name">Question</span></span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token function">useRouter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> questionId <span class="token operator">=</span> <span class="token function">useParam</span><span class="token punctuation">(</span><span class="token string">"questionId"</span><span class="token punctuation">,</span> <span class="token string">"number"</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>deleteQuestionMutation<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useMutation</span><span class="token punctuation">(</span>deleteQuestion<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>question<span class="token punctuation">,</span> <span class="token punctuation">{</span>refetch<span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useQuery</span><span class="token punctuation">(</span>getQuestion<span class="token punctuation">,</span> <span class="token punctuation">{</span>id<span class="token operator">:</span> questionId<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>updateChoiceMutation<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useMutation</span><span class="token punctuation">(</span>updateChoice<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> <span class="token function-variable function">handleVote</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">id<span class="token operator">:</span> number</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">try</span> <span class="token punctuation">{</span>
+      <span class="token keyword control-flow">await</span> <span class="token function">updateChoiceMutation</span><span class="token punctuation">(</span><span class="token punctuation">{</span>id<span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token function">refetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword control-flow">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"Error updating choice "</span> <span class="token operator">+</span> <span class="token known-class-name class-name">JSON</span><span class="token punctuation">.</span><span class="token method function property-access">stringify</span><span class="token punctuation">(</span>error<span class="token punctuation">,</span> <span class="token keyword null nil">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword control-flow">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Head</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span><span class="token plain-text">Question </span><span class="token punctuation">{</span>question<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Head</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span><span class="token punctuation">{</span>question<span class="token punctuation">.</span><span class="token property-access">text</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span><span class="token plain-text">
+          </span><span class="token punctuation">{</span>question<span class="token punctuation">.</span><span class="token property-access">choices</span><span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">choice</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">(</span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+              </span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">text</span><span class="token punctuation">}</span><span class="token plain-text"> - </span><span class="token punctuation">{</span>choice<span class="token punctuation">.</span><span class="token property-access">votes</span><span class="token punctuation">}</span><span class="token plain-text"> votes
+              </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token function">handleVote</span><span class="token punctuation">(</span>choice<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">Vote</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+          <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span><span class="token plain-text">
+
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Link</span></span> <span class="token attr-name">href</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/questions/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>question<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/edit</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+          </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span><span class="token punctuation">></span></span><span class="token plain-text">Edit</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Link</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+
+        &lt;button
+          type="button"
+          onClick=</span><span class="token punctuation">{</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+            <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span><span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method function property-access">confirm</span><span class="token punctuation">(</span><span class="token string">"This will be deleted"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword control-flow">await</span> <span class="token function">deleteQuestionMutation</span><span class="token punctuation">(</span><span class="token punctuation">{</span>id<span class="token operator">:</span> question<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+              router<span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span><span class="token string">"/questions"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token plain-text">
+          style=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>marginLeft<span class="token operator">:</span> <span class="token string">"0.5rem"</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token plain-text">
+        >
+          Delete
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="%E6%9C%80%E5%90%8E%E8%AE%A9%E6%88%91%E4%BB%AC%E6%94%AF%E6%8C%81%E7%BC%96%E8%BE%91%E6%9F%90%E9%97%AE%E9%A2%98%E4%B8%8B%E7%9A%84%E4%B8%80%E4%B8%AA%E9%80%89%E6%8B%A9">最后，让我们支持编辑某问题下的一个选择<a class="anchor" href="#%E6%9C%80%E5%90%8E%E8%AE%A9%E6%88%91%E4%BB%AC%E6%94%AF%E6%8C%81%E7%BC%96%E8%BE%91%E6%9F%90%E9%97%AE%E9%A2%98%E4%B8%8B%E7%9A%84%E4%B8%80%E4%B8%AA%E9%80%89%E6%8B%A9">§</a></h3>
+<p>如果单击现有问题之一上的“编辑”按钮，你将看到它使用与创建问题相同的形式。至
+此，该部分已经完成！我们只需要更新我们的 mutation。</p>
+<p>打开 <code>app/questions/mutations/updateQuestion.ts</code> 并进行如下改动：</p>
+<pre class="language-diff"><code class="language-diff">// app/questions/mutations/updateQuestion.ts
+import {resolver} from "blitz"
+import db from "db"
+import * as z from "zod"
+
+const UpdateQuestion = z
+<span class="token unchanged"><span class="token prefix unchanged"> </span> .object({
+<span class="token prefix unchanged"> </span>   id: z.number(),
+<span class="token prefix unchanged"> </span>   text: z.string(),
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   choices: z.array(
+<span class="token prefix inserted">+</span>     z.object({id: z.number().optional(), text: z.string()}).nonstrict(),
+<span class="token prefix inserted">+</span>   ),
+</span><span class="token unchanged"><span class="token prefix unchanged"> </span> })
+<span class="token prefix unchanged"> </span> .nonstrict()
+</span>
+export default resolver.pipe(
+<span class="token unchanged"><span class="token prefix unchanged"> </span> resolver.zod(UpdateQuestion),
+<span class="token prefix unchanged"> </span> resolver.authorize(),
+<span class="token prefix unchanged"> </span> async ({id, ...data}) => {
+</span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span>   const question = await db.question.update({where: {id}, data})
+</span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span>   const question = await db.question.update({
+<span class="token prefix inserted">+</span>     where: {id},
+<span class="token prefix inserted">+</span>     data: {
+<span class="token prefix inserted">+</span>       ...data,
+<span class="token prefix inserted">+</span>       choices: {
+<span class="token prefix inserted">+</span>         upsert: data.choices.map((choice) => ({
+<span class="token prefix inserted">+</span>           // Appears to be a prisma bug,
+<span class="token prefix inserted">+</span>           // because `|| 0` shouldn't be needed
+<span class="token prefix inserted">+</span>           where: {id: choice.id || 0},
+<span class="token prefix inserted">+</span>           create: {text: choice.text},
+<span class="token prefix inserted">+</span>           update: {text: choice.text},
+<span class="token prefix inserted">+</span>         })),
+<span class="token prefix inserted">+</span>       },
+<span class="token prefix inserted">+</span>     },
+<span class="token prefix inserted">+</span>   })
+</span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span>   return question
+<span class="token prefix unchanged"> </span> },
+</span>)
+</code></pre>
+<p><code>[upsert](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#upsert)</code> 是一种特殊的操作，表示“如果存在此项目，请对其进行更新。否则创建它”。这对于
+当前情况是完美的，因为我们不需要用户在创建问题时同时添加三个选择。所以如果
+用户通过编辑问题添加另一个选择，则将在此处创建它。</p>
+<h3 id="%E7%BB%93%E5%B0%BE">结尾<a class="anchor" href="#%E7%BB%93%E5%B0%BE">§</a></h3>
+<p>🥳 恭喜！你创建了自己的 Blitz 应用！祝你玩得开心，也欢迎与你的朋友分享。现在，你已经完成了本教程，为什么不尝试使你的投票应用变得更好呢？你可以尝试：</p>
+<ul>
+<li>添加样式 (提示, 试试 <code>blitz install tailwind</code> 或 <code>blitz install chakra-ui</code>)</li>
+<li>显示更多有关选票的统计信息</li>
+<li>在 Render 或 Vercel 上实时部署。</li>
+</ul>
+<p>如果你想与全球 Blitz 社区分享你的项目，没有比 Discord 更好的地方了。</p>
+<p>访问 <a href="https://discord.blitzjs.com">discord.blitzjs.com</a>。然后，将连接发布到 <strong>#built-with-blitz</strong> 频道来与所有人共享！</p>
+<h2 id="%E8%AF%91%E8%80%85%E7%BB%93%E8%AF%AD">译者结语<a class="anchor" href="#%E8%AF%91%E8%80%85%E7%BB%93%E8%AF%AD">§</a></h2>
+<p>本文内容属于 <a href="https://blitzjs.com/docs">Blitz.js 官方文档</a> - 简介章节的前半部分。总共十四个章节（简介、社区、基础、页面、路由、权限、数据库、Queries 和 Mutations、后端架构、部署、配方、配置、CLI 和模板）。未来不定期翻译其余章节，也可能会原创一些文章。</p>
+<p>《<a href="https://github.com/hylerrix/blitzjs-tutorial">Blitz.js + React 全栈开发手册</a>》系列专注探索 Blitz.js + React 全栈应用开发，原文翻译内容会同步更新到 <a href="https://github.com/blitz-js/zh-hans.blitzjs.com">Blitz.js 中文仓库</a> 上。欢迎 Star、Watch 或关注公众号 (@ningowood) 来及时接收消息。</p>
+<blockquote>
+<p>2021 © <a href="https://github.com/hylerrix/blitzjs-tutorial">https://github.com/hylerrix/blitzjs-tutorial</a></p>
+</blockquote></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E8%AF%91%E8%80%85%E5%BA%8F">译者序</a></li><li><a href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E6%89%8B">快速入手</a><ol><li><a href="#%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84%E7%8E%AF%E5%A2%83">配置你的环境</a></li><li><a href="#%E5%AE%89%E8%A3%85-blitz">安装 Blitz</a></li><li><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E9%A1%B9%E7%9B%AE">创建一个新项目</a></li><li><a href="#%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0-blitz-%E7%A4%BE%E5%8C%BA-%F0%9F%91%8B">欢迎来到 Blitz 社区 👋</a></li><li><a href="#%E4%B8%8B%E4%B8%80%E6%AD%A5">下一步</a><ol></ol></li></ol></li><li><a href="#%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">入门教程</a><ol><li><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E5%BA%94%E7%94%A8">创建一个新应用</a></li><li><a href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%9C%8D%E5%8A%A1%E5%99%A8">开发环境服务器</a></li><li><a href="#%E4%BB%A5%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E6%B3%A8%E5%86%8C">以用户身份注册</a></li><li><a href="#%E7%BC%96%E5%86%99%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2">编写你的第一个页面</a></li><li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE">数据库配置</a></li><li><a href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E4%BB%A3%E7%A0%81">模型的脚手架代码</a><ol></ol></li><li><a href="#%E8%AE%BF%E9%97%AE-prisma-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%A2%E6%88%B7%E7%AB%AF">访问 Prisma 数据库客户端</a></li><li><a href="#%E6%9B%B4%E6%96%B0%E6%A8%A1%E5%9E%8B%E5%B1%9E%E6%80%A7%E7%94%9F%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81">更新模型属性生成的代码</a><ol></ol></li><li><a href="#%E5%9C%A8%E9%97%AE%E9%A2%98%E8%A1%A8%E6%A0%BC%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%80%89%E6%8B%A9%E9%A1%B9">在问题表格中添加选择项</a><ol></ol></li><li><a href="#%E5%88%97%E5%87%BA%E9%80%89%E6%8B%A9">列出选择</a></li><li><a href="#%E8%AE%A9%E6%88%91%E4%BB%AC%E5%85%81%E8%AE%B8%E7%94%A8%E6%88%B7%E5%AF%B9%E8%BF%99%E4%BA%9B%E9%97%AE%E9%A2%98%E6%8A%95%E7%A5%A8">让我们允许用户对这些问题投票！</a></li><li><a href="#%E7%8E%B0%E5%9C%A8%E6%98%AF%E6%97%B6%E5%80%99%E6%9D%A5%E5%A2%9E%E5%8A%A0%E6%8A%95%E7%A5%A8%E5%8A%9F%E8%83%BD">现在是时候来增加投票功能！</a></li><li><a href="#%E6%9C%80%E5%90%8E%E8%AE%A9%E6%88%91%E4%BB%AC%E6%94%AF%E6%8C%81%E7%BC%96%E8%BE%91%E6%9F%90%E9%97%AE%E9%A2%98%E4%B8%8B%E7%9A%84%E4%B8%80%E4%B8%AA%E9%80%89%E6%8B%A9">最后，让我们支持编辑某问题下的一个选择</a></li><li><a href="#%E7%BB%93%E5%B0%BE">结尾</a></li></ol></li><li><a href="#%E8%AF%91%E8%80%85%E7%BB%93%E8%AF%AD">译者结语</a></li></ol></nav></div></aside></section><footer>Powered by <a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@16.13.1/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@16.13.1/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

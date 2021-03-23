@@ -89,7 +89,7 @@ export default {
                     'articles/README.md',
                     {
                         children: [
-                            'articles/blitz/blitz-introduction.md'
+                            'articles/blitz/blitz-introduction-1.md'
                         ],
                         link: 'articles/blitz/README.md',
                         title: 'Blitz.js 篇'
