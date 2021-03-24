@@ -38,6 +38,7 @@ export default {
                 title: 'Blitz.js 篇',
                 children: [
                     'articles/blitz/blitz-introduction-1.md',
+                    'articles/blitz/blitz-introduction-2.md',
                 ],
             },
             {

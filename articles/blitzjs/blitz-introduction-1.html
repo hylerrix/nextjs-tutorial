@@ -682,7 +682,7 @@ export const Question = () => {
 </span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span> const [question, {refetch}] = useQuery(getQuestion, {id: questionId})
 </span>//...
 </code></pre>
-<p>最后，我们将告诉新的 <code>button</code> 来条用该函数！</p>
+<p>最后，我们将告诉新的 <code>button</code> 来调用该函数！</p>
 <pre class="language-jsx"><code class="language-jsx"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token function">handleVote</span><span class="token punctuation">(</span>choice<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">Vote</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>最终的 <code>Question</code> 组件应该是这个样子：</p>

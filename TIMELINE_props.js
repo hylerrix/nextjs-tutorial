@@ -25,7 +25,7 @@ export default {
     'contributors': [
         "hylerrix"
     ],
-    'date': "2021-03-23T07:13:02.000Z",
+    'date': "2021-03-24T10:26:54.000Z",
     'updated': null,
     'excerpt': "20210323 - 初始化仓库，使用 Pagic v1.2.0 和 Deno v1.8.0 构建 - 从《Deno 钻研之术》仓库中迁移之前的 React 相关文章到这里 - 发布第一篇 Blitz.js 文章",
     'cover': undefined

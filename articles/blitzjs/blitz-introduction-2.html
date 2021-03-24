@@ -1,0 +1,107 @@
+<!doctype html><html class="" data-reactroot=""><head><link rel="icon" type="image/png" href="/favicon.png"/>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="description" content="Blitz + React 全栈开发手册，构建下一代 React 全栈应用"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/>
+<title data-react-helmet="true">Blitz.js 一体化开发 (1.2)：与 Next.js 进行权衡 · Blitz.js + React 全栈开发手册</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Blitz.js + React 全栈开发手册</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Blitz.js + React 全栈开发手册</a></h1></li><li class="hide_on_mobile"><a href="/articles/">文章</a></li><li class="hide_on_mobile"><a href="http://qiniu.ningo.cloud/hylerrix/reward-alipay.png" target="_blank">打赏一下!!</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix/deno-tutorial" target="_blank">Deno 钻研之术</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix/deno-algorithm" target="_blank">Deno 算法之旅</a></li><li class="hide_on_mobile"><a href="https://blitzjs.com/" target="_blank">Blitz.js</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix" target="_blank">持续添加中...</a></li><li class="hide_on_mobile"><a href="https://github.com/ningowood" target="_blank">凝果屋</a></li><li class="hide_on_mobile"><a href="https://github.com/hylerrix" target="_blank">关于</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="https://github.com/hylerrix/blitzjs-tutorial" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class="unfold"><a href="/articles/blitz/README.md" class="nav_link">articles/blitz/README.md<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"></ol></li><li class="unfold"><a href="/articles/blitz/README.md" class="nav_link">articles/blitz/README.md<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/articles/explore/create-react-app-intro.html" class="nav_link">深入浅出 Create React App</a></li><li class=""><a href="/articles/explore/javascript-toolchain-rome.html" class="nav_link">欲取代绝大多 JavaScript 工具链？Rome 尝鲜</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>Blitz.js 一体化开发 (1.2)：与 Next.js 进行权衡</h1>
+<h2 id="nextjs-%E6%98%AF%E4%BB%80%E4%B9%88">Next.js 是什么？<a class="anchor" href="#nextjs-%E6%98%AF%E4%BB%80%E4%B9%88">§</a></h2>
+<p>Blitz 是基于 Next.js 的，因此几乎支持 Next.js 的所有功能。有关差异的更多信息，请参见此处：<a href="https://blitzjs.com/docs/why-blitz">为什么是 Blitz 而非 Next.js</a>。</p>
+<p><a href="https://nextjs.org/"><strong>Next.js</strong></a> 是一个流行的 React 框架，其中有很多内置功能，例如：</p>
+<ul>
+<li>预渲染，每页支持静态生成 (SSG) 和服务端渲染 (SSR)。</li>
+<li>自动代码拆分，可更快地加载页面。</li>
+<li>客户端路由具有优化的预加载功能。</li>
+<li>开发环境支持热更新。</li>
+<li>完全可拓展。</li>
+</ul>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-blitz-%E8%80%8C%E9%9D%9E-nextjs">为什么是 Blitz 而非 Next.js？<a class="anchor" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-blitz-%E8%80%8C%E9%9D%9E-nextjs">§</a></h2>
+<h3 id="1-%E5%85%A8%E6%A0%88%E8%80%8C%E9%9D%9E%E5%89%8D%E7%AB%AF">1. 全栈而非前端<a class="anchor" href="#1-%E5%85%A8%E6%A0%88%E8%80%8C%E9%9D%9E%E5%89%8D%E7%AB%AF">§</a></h3>
+<p>Next.js 主要是一个前端框架。它是为构建连接到其它 API 的前端而设计的。Nex.js 并不是一个真正的、开箱即用的全栈框架。</p>
+<p>Blitz 中添加了所有缺少的功能，这些功能使 Next 变成了真正的全栈框架。这些关键功能包括直接访问数据库，中间件和身份验证。</p>
+<h3 id="2-%E6%95%B0%E6%8D%AE%E5%B1%82">2. 数据层<a class="anchor" href="#2-%E6%95%B0%E6%8D%AE%E5%B1%82">§</a></h3>
+<p>Blitz 的数据层是一种新颖的技术，可以再保留客户端渲染的同时消除 API。在 Blitz 应用中，你可以将服务器代码直接导入前端，因此无需构建 API 并从前端进行数据提取工作。在构建时，Blitz 自动插入一个 API 调用，该 API 调用在服务器上运行服务端代码。本质上，Blitz 将你的 API 抽象为一个编译步骤。</p>
+<p>这是 React 应用程序开发的游戏规则改变者，因为它消除了传统 React 应用程序体系结构的整个部分。这意味着更容易学习、更快开发，并且构建事务更有趣！</p>
+<p>也就是说，你可以像往常一样继续通过 REST 或 GraphQL 进行数据获取。Blitz 对此没有任何限制。</p>
+<h3 id="3-%E5%86%85%E7%BD%AE%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81">3. 内置身份验证<a class="anchor" href="#3-%E5%86%85%E7%BD%AE%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81">§</a></h3>
+<p>Blitz 具有可与任何身份验证商一起使用的内置会话管理服务，包括自托管的电子邮件/密码和第三方服务。身份验证是一项复杂且难以正确实施的事情。将其内置到 Blitz 中可以为你节省大量时间和潜在的安全漏洞。</p>
+<p>在 Next.js 中使用 auth 构建令人敬畏的 UX 会非常地棘手和乏味，但是 Blitz 免费为你提供了一流的 DX。</p>
+<h3 id="4-%E7%BA%A6%E5%AE%9A">4. 约定<a class="anchor" href="#4-%E7%BA%A6%E5%AE%9A">§</a></h3>
+<p>除了基于文件系统的路由外，Next.js 没有任何约定。此时，每个开发人员都可以为每个项目重新发明轮子。</p>
+<p>Blitz 带来了许多约定，例如如何组织文件以及如何构造路由。这意味着你不会浪费任何时间为每个项目弄清楚这一点。这也极大地造福了社区。通用的项目结构和架构模式可让你从 Blitz 应用程序迁移到 Blitz 应用程序，并立即感到宾至如归。</p>
+<h3 id="5-%E4%BB%A3%E7%A0%81%E8%84%9A%E6%89%8B%E6%9E%B6">5. 代码脚手架<a class="anchor" href="#5-%E4%BB%A3%E7%A0%81%E8%84%9A%E6%89%8B%E6%9E%B6">§</a></h3>
+<p>有两种主要方法可以减少你必须手工编写的代码量：</p>
+<ol>
+<li>代码生成</li>
+<li>代码脚手架</li>
+</ol>
+<p><strong>Code 生成</strong> 意味着让库来为你生成代码。例如，可以通过 GraphQL 查询生成代码的 graphql-code-generator 和可以从你的数据库架构中生成整个 GraphQL API 的 Hasura。通常，codegen 无法完全自定义生成的代码。你需要通过库来支持。同时你也会常遇到 codegen 无法解决的极端情况。而且你无法修复它，因为你不拥有该代码。</p>
+<p><strong>Code 脚手架</strong> 意味着初始代码将注入到你的项目之中。从那时起，你对所有代码拥有着完全的所有权，并可以根据需要进行自定义。代码脚手架的缺点是你不会像从第三方库生成的代码那也获得自动更新。但巨大的好处在于其可以确保你永远不会受到别人无法改变的设计选择的限制。</p>
+<p>Blitz 是代码脚手架的忠实拥护者。我们有大量的 <a href="https://www.yuque.com/ningo/blitzjs/cli-generate"><code>blitz generate</code></a> 命令，可将代码脚手架插入你的项目中。我们的代码脚手架还处于初期阶段——我们仍然需要添加许多强大的功能，包括添加自己的自定义脚手架模板的功能。</p>
+<h3 id="6-%E9%85%8D%E6%96%B9">6. 配方<a class="anchor" href="#6-%E9%85%8D%E6%96%B9">§</a></h3>
+<p>Recipes 是用于将代码从 npm 或 git 存储库上的 MDX 配方放入你的项目中的单行命令。</p>
+<p>例如：</p>
+<ul>
+<li><code>blitz install tailwind</code>——一行命令安装和配置 tailwind</li>
+<li><code>blitz install chakra-ui</code>——一行命令安装和配置 chakra</li>
+<li><code>blitz install material-ui</code>——一行命令安装和配置 material-ui</li>
+</ul>
+<p>Recipes 超级强大，它们几乎可以更改项目中的任何内容，包括添加依赖项、更改代码、添加代码等。它们是通过 MDX 编写的，可以像 React 一样组成。</p>
+<h3 id="7-%E5%85%A8%E6%96%B0%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">7. 全新的开发环境<a class="anchor" href="#7-%E5%85%A8%E6%96%B0%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">§</a></h3>
+<p>一个新的 Next.js 应用是完全恐怖的。因此，每次你启动 Next.js 项目，你必须花费数小时来建立 eslint、petterier、husky git hooks 等的所有基础知识。</p>
+<p>一个新的 Blitz 应用可以为你节省大量时间，因为所有这些都是为你预先配置的！当然，你以后始终可以对其进行自定义，但是拥有一个可行的起点真的很棒。</p>
+<h3 id="8-%E6%94%BE%E5%AE%BD%E9%99%90%E5%88%B6">8. 放宽限制<a class="anchor" href="#8-%E6%94%BE%E5%AE%BD%E9%99%90%E5%88%B6">§</a></h3>
+<p>Next.js 要求你所有的 React 页面都放在一个 <code>pages/</code> 文件夹中。Blitz 通过允许你拥有无限数量的 <code>pages/</code>文件夹来放宽此限制。</p>
+<p>对于大型项目，这是一个巨大的好处，因为你可以按任意方式分离和组织页面。</p>
+<p>例如：</p>
+<ul>
+<li><code>app/pages/</code> 可以包含“首页”和“关于”之类的页面</li>
+<li><code>app/products/pages/</code> 可以包含于产品相关的所有页面</li>
+<li><code>app/admin/pages/</code> 可以包含与后端 admin 部分相关的所有页面</li>
+</ul>
+<h2 id="%E6%9D%83%E8%A1%A1">权衡<a class="anchor" href="#%E6%9D%83%E8%A1%A1">§</a></h2>
+<p>你应该会知道，一切都需要被权衡。那么 Blitz 需要权衡的是什么？</p>
+<h3 id="%E6%A1%86%E6%9E%B6%E9%99%90%E5%88%B6">框架限制<a class="anchor" href="#%E6%A1%86%E6%9E%B6%E9%99%90%E5%88%B6">§</a></h3>
+<p>每个框架都有一定程度的限制。如果你使用 React 构建应用，那么就很容易被 React 限制。</p>
+<p>Blitz 的限制级别比 Next.js 高一个级别。Blitz 代码库与 Next.js 代码库没有 <em>太多</em> 不同。但这已经够不同了，以至于“弹出”到普通的 Next.js 并不简单。例如，你可能将使用 Blitz 所特有的 Blitz 身份验证。但切换到 Next AUth 将为你提供与 Next.js 相当的体验。</p>
+<p>Blitz 零 API 数据层是 Blitz 独有的。因此，如果此时切换到 Next.js，则必须管理自己的 API 代码（而如果从 Next.js 开始，则必须这么做，因此不会丢失任何内容）。但是，你所有的后端 query 和 mutation 逻辑都可以直接移植。</p>
+<h3 id="%E5%8D%87%E7%BA%A7-nextjs">升级 Next.js<a class="anchor" href="#%E5%8D%87%E7%BA%A7-nextjs">§</a></h3>
+<p>如果你想站在 Next.js 版本的最前沿，请知道 Blitz 会稍微落后但不会太远。通常，我们会在新的 Next.js 版本发布后不到一周的时间内更新 Blitz。</p>
+<p>但如果你使用 yarn，则可以先使用 package.json 中的 <code>resolutions</code> 字段来升级 next.js。</p>
+<h3 id="%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF-api">多客户端 API<a class="anchor" href="#%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF-api">§</a></h3>
+<p>有人会说，“迟早你会需要 GraphQL，所以你应该从它开始”。虽然我们认为绝大多数应用程序的增长不会足够大以至于不能保证 GraphQL，但是提供多个客户端的 API 的问题是一个很好的要点。</p>
+<p>我们完全承认，许多 Web 应用程序迟早都需要移动应用程序。我们希望这种集成尽可能的简单！</p>
+<p>也就是说，你可以为其他客户端将 GraphQL 服务器添加到 Blitz 应用中，这可能是一个很好的选择，有些人已经开始这样做了。</p>
+<p><strong>目前，截至 2021 年 2 月 17 日：</strong></p>
+<ul>
+<li>你可以直接访问自动生成的 API 接口，并且可以在任何移动应用中使用它们（我们目前有几个人在建设中）；</li>
+<li>你可以通过 <a href="https://www.yuque.com/ningo/blitzjs/cli-routes"><code>blitz routes</code></a> 来查看应用程序中生成的 API；</li>
+<li>你可以在此处查看 API 接口的 RPC 规范：<a href="https://www.yuque.com/ningo/blitzjs/rpc-specification">RPC Specification</a>。</li>
+</ul>
+<p><strong>我们计划今后要做的事：</strong></p>
+<ol>
+<li>第一步，添加文档和工具，以使手动使用生成的 API 接口变得更加容易，访问：<a href="https://github.com/blitz-js/blitz/discussions/1907">https://github.com/blitz-js/blitz/discussions/1907</a> 和 <a href="https://github.com/blitz-js/blitz/issues/745">https://github.com/blitz-js/blitz/issues/745</a>；</li>
+<li>接下来，添加生成一个 JS/TS 客户端库的功能，作为使用从应用生成接口的好方
+法；</li>
+<li>还有，添加某种一流的 react-native 支持，你可以再其中将 Blitz queries/mutations 直接导入到你的 react-native 代码中，并使它神奇地工作，就像今天在你的 Web 应用程序中一样。在 1.0 版本后，这将是 Brandon 在这一年中的主要工作重点。</li>
+</ol>
+<h3 id="%E9%AB%98%E9%98%B6%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84">高阶后端架构<a class="anchor" href="#%E9%AB%98%E9%98%B6%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84">§</a></h3>
+<p>目前，Blitz 在后端架构上的功能还很少，尤其是与 Nest.js 或 AdonisJS 之类的
+东西相比。但是，这并不意味着你不能在 Blitz 中使用这些模式，但你需要自己进
+行设置。实际上，如果需要，你可以在 Blitz 应用中直接使用 Nest.js。</p>
+<p>但是我们非常有兴趣通过默认支持或简单的植入来加入更先进的后端体系架构到
+Blitz 中。我们有一个<a href="https://github.com/blitz-js/blitz/discussions/1841">正在进行的讨论</a>，如果你有想法，我们希望你能加入。</p>
+<h3 id="%E5%BD%93%E4%B8%8D%E9%83%A8%E7%BD%B2%E5%88%B0-serverless-%E6%97%B6%E7%9A%84%E5%8D%95%E7%BA%BF%E7%A8%8B">当不部署到 Serverless 时的单线程<a class="anchor" href="#%E5%BD%93%E4%B8%8D%E9%83%A8%E7%BD%B2%E5%88%B0-serverless-%E6%97%B6%E7%9A%84%E5%8D%95%E7%BA%BF%E7%A8%8B">§</a></h3>
+<p>具体来说，这是 Next.js 的折衷方案。Next.js 是单线程的，这意味着如果你在进行繁重的后端处理时，你可能会发现所有的 Web 请求都开始受到影响。解决方案是让后端处理来生成其他进程。</p>
+<p>运行多个后台进程并不是很困难，但是我们希望添加文档和 API，以使其尽可能简单。</p>
+<h2 id="%E8%AF%91%E8%80%85%E7%BB%93%E8%AF%AD">译者结语<a class="anchor" href="#%E8%AF%91%E8%80%85%E7%BB%93%E8%AF%AD">§</a></h2>
+<p>本文内容属于 <a href="https://blitzjs.com/docs">Blitz.js 官方文档</a> - 简介章节的后半部分。总共十四个章节（简介、社区、基础、页面、路由、权限、数据库、Queries 和 Mutations、后端架构、部署、配方、配置、CLI 和模板）。未来不定期翻译其余章节，也可能会原创一些文章。</p>
+<p>《<a href="https://github.com/hylerrix/blitzjs-tutorial">React 全栈开发手册</a>》系列专注探索 Blitz.js + React 全栈应用开发，原文翻译内容会同步更新到 <a href="https://github.com/blitz-js/zh-hans.blitzjs.com">Blitz.js 中文仓库</a> 上。欢迎 Star、Watch 或关注公众号 (@ningowood) 来及时接收消息。</p>
+<blockquote>
+<p>2021 © <a href="https://github.com/hylerrix/blitzjs-tutorial">https://github.com/hylerrix/blitzjs-tutorial</a></p>
+</blockquote></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#nextjs-%E6%98%AF%E4%BB%80%E4%B9%88">Next.js 是什么？</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-blitz-%E8%80%8C%E9%9D%9E-nextjs">为什么是 Blitz 而非 Next.js？</a><ol><li><a href="#1-%E5%85%A8%E6%A0%88%E8%80%8C%E9%9D%9E%E5%89%8D%E7%AB%AF">1. 全栈而非前端</a></li><li><a href="#2-%E6%95%B0%E6%8D%AE%E5%B1%82">2. 数据层</a></li><li><a href="#3-%E5%86%85%E7%BD%AE%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81">3. 内置身份验证</a></li><li><a href="#4-%E7%BA%A6%E5%AE%9A">4. 约定</a></li><li><a href="#5-%E4%BB%A3%E7%A0%81%E8%84%9A%E6%89%8B%E6%9E%B6">5. 代码脚手架</a></li><li><a href="#6-%E9%85%8D%E6%96%B9">6. 配方</a></li><li><a href="#7-%E5%85%A8%E6%96%B0%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">7. 全新的开发环境</a></li><li><a href="#8-%E6%94%BE%E5%AE%BD%E9%99%90%E5%88%B6">8. 放宽限制</a></li></ol></li><li><a href="#%E6%9D%83%E8%A1%A1">权衡</a><ol><li><a href="#%E6%A1%86%E6%9E%B6%E9%99%90%E5%88%B6">框架限制</a></li><li><a href="#%E5%8D%87%E7%BA%A7-nextjs">升级 Next.js</a></li><li><a href="#%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF-api">多客户端 API</a></li><li><a href="#%E9%AB%98%E9%98%B6%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84">高阶后端架构</a></li><li><a href="#%E5%BD%93%E4%B8%8D%E9%83%A8%E7%BD%B2%E5%88%B0-serverless-%E6%97%B6%E7%9A%84%E5%8D%95%E7%BA%BF%E7%A8%8B">当不部署到 Serverless 时的单线程</a></li></ol></li><li><a href="#%E8%AF%91%E8%80%85%E7%BB%93%E8%AF%AD">译者结语</a></li></ol></nav></div></aside></section><footer>Powered by <a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@16.13.1/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@16.13.1/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>
