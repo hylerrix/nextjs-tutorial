@@ -825,7 +825,7 @@ export const Question = () => {
 //...
 ```
 
-最后，我们将告诉新的 `button` 来条用该函数！
+最后，我们将告诉新的 `button` 来调用该函数！
 
 ```jsx
 <button onClick={() => handleVote(choice.id)}>Vote</button>
